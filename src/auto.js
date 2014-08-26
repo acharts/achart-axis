@@ -415,7 +415,7 @@ Auto.Time.caculate = function(info){
         interval = year * yms;
         var maxYear = getYear(max);
           
-        for(var i = minYear; i < maxYear + year; i = i + year){
+        for(var i = minYear; i <= maxYear + year; i = i + year){
           ticks.push(createYear(i));
         }
         interval = null;
