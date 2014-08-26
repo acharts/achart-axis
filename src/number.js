@@ -128,7 +128,10 @@ Util.augment(NumberAxis,{
         _self.set('ticks',ticks);
       }
       
-      info.tickInterval && _self.set('tickInterval',info.tickInterval);
+      //如果初始化时未配置tickInterval,则更改
+      if(!_self.getCfgAttr('tickInterval')){
+        _self.set('tickInterval',info.tickInterval);
+      }
   },
 	/**
    * 将指定的节点转换成对应的坐标点

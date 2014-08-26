@@ -268,7 +268,7 @@ Auto.caculate = function(info,stackType){
       max = snapMultiple(max,interval,true);
       min = snapMultiple(min,interval);
 
-      count = (max - min) / interval;
+      count = Math.round((max - min) / interval);
     }
 
   }
