@@ -365,12 +365,13 @@ Auto.Time.caculate = function(info){
     data = info.data,
     interval = info.interval,
     ticks = [],
-    count;
+    count,
+    rst;
     
 
 
   if(isNull(min) || isNull(max) || isNull(interval)){
-    var rst = analyzeData(data,function(date){
+    rst = analyzeData(data,function(date){
       if(Util.isDate(date)){
         date = date.getTime();
       }

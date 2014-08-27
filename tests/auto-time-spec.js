@@ -42,7 +42,7 @@ describe('测试时间坐标轴',function(){
     };
 
     var rst = Auto.Time.caculate(info);
-    expect(rst.ticks.length).to.be(6);
+    expect(rst.ticks.length).to.be(7);
     log(info.data,rst,'指定最大值，最小值,不指定interval');
 
   });
@@ -50,7 +50,7 @@ describe('测试时间坐标轴',function(){
   it('指定数据，不指定interval',function(){
     var data = [Date.UTC(2010,1,1),Date.UTC(2019,12,31)];
     var rst = Auto.Time.caculate({data : data});
-    expect(rst.ticks.length).to.be(6);
+    expect(rst.ticks.length).to.be(7);
     log(data,rst,'指定数据，不指定interval');
   });
   it('指定数据,测试月，不指定interval',function(){

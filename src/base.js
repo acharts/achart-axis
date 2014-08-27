@@ -136,9 +136,18 @@ Util.augment(Axis,{
                 }
                 
             }else{
+                if(position == 'top'){
+                    start = {};
+                    start.x = plotRange.start.x;
+                    start.y = plotRange.end.y;
+
+                    end = plotRange.end;
+
+                }else{
+                    end.x = plotRange.end.x;
+                    end.y = start.y;
+                }
                 
-                end.x = plotRange.end.x;
-                end.y = start.y;
             }
 
             rst.start = start;
@@ -344,7 +353,7 @@ Util.augment(Axis,{
             directfactor = _self._getDirectFactor();
             if(offset == 0){
                 offset = offset + tickOffset * directfactor;
-            }else if(offset > 0){
+            }else if(directfactor > 0){
             
                 offset = offset + tickOffset;
             }else{

@@ -42,6 +42,12 @@ NumberAxis.ATTRS = {
 	 * @type {Number}
 	 */
 	tickInterval : null,
+
+  /**
+   * 根据min,max,ticks自动设置offset
+   * @type {Boolean}
+   */
+  autoOffset : false,
 	/**
    * 类型
    * @type {String}
@@ -84,12 +90,23 @@ Util.augment(NumberAxis,{
 		var _self = this;
 		NumberAxis.superclass.beforeRenderUI.call(_self);
 		
+    var ticks = _self.get('ticks');
+
+    if(_self.get('autoOffset') && ticks){
+      _self._setAutoOffset({
+        ticks : ticks,
+        min : _self.get('min'),
+        max : _self.get('max')
+      });
+    }
 		//如果未指定坐标轴上的点，则自动计算
-		if(!_self.get('ticks')){
-			var	ticks = _self._getTicks(_self.get('max'),_self.get('min'),_self.get('tickInterval'));
+		if(!ticks){
+			ticks = _self._getTicks(_self.get('max'),_self.get('min'),_self.get('tickInterval'));
 
 			_self.set('ticks',ticks);
 		}
+
+
 	},
   _getTicks : function(max,min,tickInterval){
     var ticks = [],
@@ -120,7 +137,9 @@ Util.augment(NumberAxis,{
       if(info.interval){
         info.tickInterval = info.interval;
       }
-
+      if(_self.get('autoOffset')){ //自动设置tick offset
+        _self._setAutoOffset(info);
+      }
       if(info.ticks){
         _self.set('ticks',info.ticks);
       }else{
@@ -132,6 +151,30 @@ Util.augment(NumberAxis,{
       if(!_self.getCfgAttr('tickInterval')){
         _self.set('tickInterval',info.tickInterval);
       }
+  },
+  _setAutoOffset : function(info){
+    var _self = this,
+      ticks = info.ticks,
+      percentStart = 0,
+      percentEnd = 0,
+      offset = [],
+      avg,
+      length = _self.getEndOffset() - _self.getStartOffset();
+    if(info.min != null && info.min > ticks[0]){
+      
+      percentStart = (ticks[1] - info.min)/(ticks[1] - ticks[0]);
+      ticks.shift();
+    }
+    var count = ticks.length;
+    if(info.max != null && info.max < ticks[count - 1]){
+      percentEnd = (info.max - ticks[count - 2]) /(ticks[count - 1] - ticks[count-2]);
+      ticks.pop();
+    }
+
+    avg = length /(ticks.length + percentStart + percentEnd);
+    offset[0] = avg * percentStart;
+    offset[1] = avg * percentEnd;
+    _self.set('tickOffset',offset);
   },
 	/**
    * 将指定的节点转换成对应的坐标点
@@ -157,6 +200,8 @@ Util.augment(NumberAxis,{
           pointCache,
           floorVal,
           floorIndex,
+          baseVal,
+          baseIndex,
           ceilingVal,
           tickInterval,
           ticks;
@@ -166,7 +211,14 @@ Util.augment(NumberAxis,{
       }
       pointCache = _self.get('pointCache');
       floorVal = floor(pointCache,offset); 
+
+      if(isNaN(floorVal)){ //存在tickoffset,比第一个tick小的场景
+        floorVal = pointCache[0];
+        ceilingVal = pointCache[1];
+      }
+      baseVal = floorVal;
       floorIndex = Util.indexOf(pointCache,floorVal);
+      baseIndex = floorIndex;
       ticks = _self.get('ticks');
       tickInterval = _self.get('tickInterval');
       avg = _self._getAvgLength(ticks.length);
@@ -176,13 +228,20 @@ Util.augment(NumberAxis,{
       }
 
       if(tickInterval){
-      	return ticks[floorIndex] + ((offset - floorVal) / avg) * tickInterval;
+      	return ticks[floorIndex] + ((offset - baseVal) / avg) * tickInterval;
+      }
+      if(ceilingVal == null){
+        ceilingVal = ceiling(pointCache,offset);
+        if(isNaN(ceilingVal)){
+          var count = pointCache.length;
+          floorIndex = count - 2;
+          baseIndex = count - 1;
+          baseVal = pointCache[count - 1];
+        }
       }
       
-
-      ceilingVal = ceiling(pointCache,offset);
       
-      return ticks[floorIndex] + ((offset - floorVal) / avg) * (ticks[floorIndex + 1] - ticks[floorIndex]);;
+      return ticks[baseIndex] + ((offset - baseVal) / avg) * (ticks[floorIndex + 1] - ticks[floorIndex]);;
       
   },
   _getAvgLength : function(count){
@@ -201,8 +260,10 @@ Util.augment(NumberAxis,{
         ticks = _self.get('ticks'),
         index = Util.indexOf(ticks,value),
         tickInterval = _self.get('tickInterval'),
-        floorVal,
-        ceilingVal,
+        count = ticks.length,
+        floorVal, //比较小的tick值
+        ceilingVal,//大一些的tick值
+        baseVal, //用于跟当前值进行减，计算比例的值
         avg = _self._getAvgLength(ticks.length),
         offset;
 
@@ -212,16 +273,30 @@ Util.augment(NumberAxis,{
     }
     //获取小于当前值的最后一个坐标点
     floorVal = floor(ticks,value);
-    if(isNaN(floorVal)){
-    	return NAN;
+    ceilingVal = ceiling(ticks,value);
+    baseVal =  floorVal;
+
+    if(isNaN(floorVal)){ //在最小的坐标点外面
+    	floorVal = ticks[0];
+      ceilingVal = ticks[1];
+      baseVal =  floorVal;
+      offset = 0;
+    }else{ 
+      index = Util.indexOf(ticks,floorVal);
+      offset = avg * index;
     }
-    index = Util.indexOf(ticks,floorVal);
-   	offset = avg * index;
+
+    if(isNaN(ceilingVal)){ //在最大的坐标点外面
+      floorVal = ticks[count - 2];
+      ceilingVal = ticks[count - 1];
+      baseVal = ceilingVal;
+      offset = avg * (count - 1);
+    }
+    /**/
     if(tickInterval){
-    	offset = offset + ((value - floorVal)/tickInterval) * avg;
+    	offset = offset + ((value - baseVal)/tickInterval) * avg;
     }else{
-    	ceilingVal = ceiling(ticks,value);
-    	offset = offset + ((value - floorVal)/(ceilingVal - floorVal)) * avg;
+    	offset = offset + ((value - baseVal)/(ceilingVal - floorVal)) * avg;
     }
     
     return offset;
