@@ -192,7 +192,7 @@ describe('auto offset',function(){
   });
 
   it('测试终点offset',function(){
-    var avg = axis._getAvgLength(10);
+    var avg = axis._getAvgLength(9);
     var tickOffset = axis.get('tickOffset');
     expect(tickOffset[0]).to.be(1/2 * avg);
   });
@@ -204,7 +204,7 @@ describe('auto offset',function(){
       ticks : [0,10,20,30,40,50,60,70,80,90,100]
     });
 
-    var avg = axis._getAvgLength(10);
+    var avg = axis._getAvgLength(9);
     var tickOffset = axis.get('tickOffset');
 
     expect(parseInt(tickOffset[0])).to.be(parseInt(1/5 * avg));

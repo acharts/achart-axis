@@ -171,7 +171,7 @@ Util.augment(NumberAxis,{
       ticks.pop();
     }
 
-    avg = length /(ticks.length + percentStart + percentEnd);
+    avg = length /(ticks.length - 1 + percentStart + percentEnd);
     offset[0] = avg * percentStart;
     offset[1] = avg * percentEnd;
     _self.set('tickOffset',offset);
