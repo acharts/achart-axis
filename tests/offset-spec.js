@@ -57,8 +57,7 @@ describe('offset axis',function(){
     var value = -10,
       offset = axis.getOffset(value),
       offset1 = axis.getOffsetByIndex(0);
-    expect(isNaN(offset)).not.to.be(true);
-    expect(offset < offset1).to.be(true);
+    expect(isNaN(offset)).to.be(true);
 
   });
 
@@ -66,7 +65,8 @@ describe('offset axis',function(){
     var value = -4,
       offset = axis.getOffset(value);
 
-    
+    expect(isNaN(offset)).not.to.be(true);
+
     expect(axis.getValue(offset)).to.be(value);
   });
 
@@ -129,8 +129,7 @@ describe('offset axis,no tickinterval',function(){
     var value = -10,
       offset = axis.getOffset(value),
       offset1 = axis.getOffsetByIndex(0);
-    expect(isNaN(offset)).not.to.be(true);
-    expect(offset < offset1).to.be(true);
+    expect(isNaN(offset)).to.be(true);
 
   });
 

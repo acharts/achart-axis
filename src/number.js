@@ -3,16 +3,22 @@
  * @ignore
  */
 
-	
+  
 var
-	Axis = require('./base'),
-	Util = require('achart-util'),
+  Axis = require('./base'),
+  Util = require('achart-util'),
   abbrs = ['k','m','g','t'],
-	NAN = NaN;
+  NAN = NaN;
 
 //取小于当前值的
 var floor = Util.snapFloor,
   ceiling = Util.snapCeiling;
+
+function between(v1,v2,value){
+  var min = Math.min(v1,v2),
+    max = Math.max(v1,v2);
+  return value >= min && value <= max;
+}
 
 /**
  * @class Chart.Axis.Number
@@ -20,39 +26,39 @@ var floor = Util.snapFloor,
  * @extends Chart.Axis
  */
 function NumberAxis(cfg){
-	NumberAxis.superclass.constructor.call(this,cfg);
+  NumberAxis.superclass.constructor.call(this,cfg);
 }
 
 Util.extend(NumberAxis,Axis);
 
 NumberAxis.ATTRS = {
 
-	/**
-	 * 坐标开始的最小值
-	 * @type {Number}
-	 */
-	min : null,
-	/**
-	 * 坐标结束的最大值
-	 * @type {Number}
-	 */
-	max : null,
-	/**
-	 * 坐标轴上节点的最小距离
-	 * @type {Number}
-	 */
-	tickInterval : null,
+  /**
+   * 坐标开始的最小值
+   * @type {Number}
+   */
+  min : null,
+  /**
+   * 坐标结束的最大值
+   * @type {Number}
+   */
+  max : null,
+  /**
+   * 坐标轴上节点的最小距离
+   * @type {Number}
+   */
+  tickInterval : null,
 
   /**
    * 根据min,max,ticks自动设置offset
    * @type {Boolean}
    */
   autoOffset : false,
-	/**
+  /**
    * 类型
    * @type {String}
    */
-	type : 'number',
+  type : 'number',
   /**
    * 格式化坐标轴上的节点
    * @type {Function}
@@ -85,11 +91,11 @@ NumberAxis.ATTRS = {
 };
 
 Util.augment(NumberAxis,{
-	//渲染控件前
-	beforeRenderUI : function(){
-		var _self = this;
-		NumberAxis.superclass.beforeRenderUI.call(_self);
-		
+  //渲染控件前
+  beforeRenderUI : function(){
+    var _self = this;
+    NumberAxis.superclass.beforeRenderUI.call(_self);
+    
     var ticks = _self.get('ticks');
 
     if(_self.get('autoOffset') && ticks){
@@ -99,15 +105,15 @@ Util.augment(NumberAxis,{
         max : _self.get('max')
       });
     }
-		//如果未指定坐标轴上的点，则自动计算
-		if(!ticks){
-			ticks = _self._getTicks(_self.get('max'),_self.get('min'),_self.get('tickInterval'));
+    //如果未指定坐标轴上的点，则自动计算
+    if(!ticks){
+      ticks = _self._getTicks(_self.get('max'),_self.get('min'),_self.get('tickInterval'));
 
-			_self.set('ticks',ticks);
-		}
+      _self.set('ticks',ticks);
+    }
 
 
-	},
+  },
   _getTicks : function(max,min,tickInterval){
     var ticks = [],
       count = (max - min)/tickInterval,
@@ -176,17 +182,23 @@ Util.augment(NumberAxis,{
     offset[1] = avg * percentEnd;
     _self.set('tickOffset',offset);
   },
-	/**
+  /**
    * 将指定的节点转换成对应的坐标点
    * @param  {*} value 数据值或者分类 
    * @return {Number} 节点坐标点（单一坐标）x轴的坐标点或者y轴的坐标点
    */
   getOffset : function(value){
     value = parseFloat(value);
-  	var _self = this,
-  		offset = _self.getRelativeOffset(value);
+    var _self = this,
+      offset = _self.getRelativeOffset(value),
+      start = _self._getStartCoord(),
+      end = _self._getEndCoord();
 
-  	return _self._appendEndOffset(offset) + _self._getStartCoord();
+    offset = _self._appendEndOffset(offset) + _self._getStartCoord();
+    if(!between(start,end,offset)){
+      return NAN;
+    }
+    return offset;
   },
   /**
    * 根据画板上的点获取坐标轴上的值，用于将cavas上的点的坐标转换成坐标轴上的坐标
@@ -224,11 +236,11 @@ Util.augment(NumberAxis,{
       avg = _self._getAvgLength(ticks.length);
 
       if(floorVal == offset){
-      	return ticks[floorIndex];
+        return ticks[floorIndex];
       }
 
       if(tickInterval){
-      	return ticks[floorIndex] + ((offset - baseVal) / avg) * tickInterval;
+        return ticks[floorIndex] + ((offset - baseVal) / avg) * tickInterval;
       }
       if(ceilingVal == null){
         ceilingVal = ceiling(pointCache,offset);
@@ -245,11 +257,11 @@ Util.augment(NumberAxis,{
       
   },
   _getAvgLength : function(count){
-  	var _self = this,
-  		length = _self._getLength();
-  	return (length / (count - 1));
+    var _self = this,
+      length = _self._getLength();
+    return (length / (count - 1));
   },
-	 /**
+   /**
    * @protected
    * 获取相对位置
    * @param  {*} value 数据值或者分类 
@@ -269,7 +281,7 @@ Util.augment(NumberAxis,{
 
     //如果在指定的坐标点中，直接返回坐标点的位置
     if(index !== -1){
-    	return avg * index;
+      return avg * index;
     }
     //获取小于当前值的最后一个坐标点
     floorVal = floor(ticks,value);
@@ -277,7 +289,7 @@ Util.augment(NumberAxis,{
     baseVal =  floorVal;
 
     if(isNaN(floorVal)){ //在最小的坐标点外面
-    	floorVal = ticks[0];
+      floorVal = ticks[0];
       ceilingVal = ticks[1];
       baseVal =  floorVal;
       offset = 0;
@@ -294,11 +306,10 @@ Util.augment(NumberAxis,{
     }
     /**/
     if(tickInterval){
-    	offset = offset + ((value - baseVal)/tickInterval) * avg;
+      offset = offset + ((value - baseVal)/tickInterval) * avg;
     }else{
-    	offset = offset + ((value - baseVal)/(ceilingVal - floorVal)) * avg;
-    }
-    
+      offset = offset + ((value - baseVal)/(ceilingVal - floorVal)) * avg;
+    }    
     return offset;
   }
 });
