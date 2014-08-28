@@ -154,9 +154,9 @@ Util.augment(NumberAxis,{
       }
       
       //如果初始化时未配置tickInterval,则更改
-      if(!_self.getCfgAttr('tickInterval')){
+      //if(!_self.getCfgAttr('tickInterval')){
         _self.set('tickInterval',info.tickInterval);
-      }
+      //}
   },
   _setAutoOffset : function(info){
     var _self = this,

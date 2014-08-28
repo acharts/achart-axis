@@ -8,7 +8,7 @@ var Canvas = require('achart-canvas'),
 
 var Util = require('achart-util');
 
-$('<div id="s1"></div>').prependTo('body');
+$('<div id="s1"><button id="btn">change</button></div>').prependTo('body');
 
 var canvas = new Canvas({
   id : 's1',
@@ -26,12 +26,27 @@ describe('数字坐标轴生成',function(){
     min : 0,
     max : 100,
     tickInterval : 10,
+    grid : {
+      stroke : '#ddd'
+    },
+    animate : false,
     labels : {
       label : {
         y : 12
       }
     }
   });
+
+
+  $('#btn').on('click',function(){
+    var r =  Math.random()
+      axis.change({
+        min : 0,
+        max : 20 * parseInt(5 + 10 * r),
+        tickInterval : 4 * parseInt( 5 + 10 * Math.random())
+      });
+  });
+
 
   var node = axis.get('node');
 
@@ -62,18 +77,22 @@ describe('数字坐标轴生成',function(){
 
   describe('测试数字坐标轴变化',function(){
     
-    it('更改坐标轴',function(){
+    it('更改坐标轴',function(done){
       axis.change({
         min : 0,
         max : 1000,
         tickInterval : 200
       });
 
+      setTimeout(function(){
+        done();
+      },1000)
+
     });
 
     it('测试新生成的坐标点',function(){
-      var value = 100,
-        offset = axis.getOffset(value);
+      var value = 100;
+      var  offset = axis.getOffset(value);
         expect(offset).to.be(66);
 
         offset = axis.getOffset(200);
@@ -86,6 +105,7 @@ describe('数字坐标轴生成',function(){
   });
 });
 
+/*
 describe('测试数字中轴坐标系',function(){
   
   var xAxis = canvas.addGroup(Axis,{
@@ -96,8 +116,7 @@ describe('测试数字中轴坐标系',function(){
     },
     line : {
         'stroke-width' : 1,
-        'stroke' : '#C0D0E0'/*,
-        'arrow-end' : 'classic-wide-long'*/
+        'stroke' : '#C0D0E0'
     },
     tickOffset : 10,
     y : 220,
@@ -152,7 +171,7 @@ describe('测试数字中轴坐标系',function(){
       y : yAxis.getOffset(y)
     };
   }
-  /**/
+  
   it('测试x坐标轴',function(){
     expect(xAxis.get('node')).not.to.be(undefined);
 
@@ -219,7 +238,7 @@ describe('测试数字中轴坐标系',function(){
 
   });
 
-  it('remove',function(done){
+  xit('remove',function(done){
 
     setTimeout(function(){
       canvas.destroy();
@@ -229,3 +248,6 @@ describe('测试数字中轴坐标系',function(){
   });
 
 });
+
+
+*/

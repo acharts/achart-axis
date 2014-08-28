@@ -153,7 +153,7 @@ Util.augment(Grid,{
 		_self.set('items',items);
 		_self._clearPre();
 		_self._precessItems(items);
-		_self._changeGridLines(items,CLS_GRID + '-line',true);
+		_self._changeGridLines(items,CLS_GRID + '-line');
 		_self._changeMinorLinses();
 
 	},
@@ -195,8 +195,9 @@ Util.augment(Grid,{
   	_self.set('gridLine' + cls,gridLine);
 	},
 	//更改栅格
-	_changeGridLines : function(items,cls,animate){
+	_changeGridLines : function(items,cls){
 		var _self = this,
+			animate = _self.get('animate'),
 
       gridLine = _self.get('gridLine' + cls);
     if(gridLine){

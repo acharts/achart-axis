@@ -57,6 +57,11 @@ Abstract.ATTRS = {
    */
   autoPaint : true,
   /**
+   * 坐标轴相关的动画，可以一起控制对应的labels,grid，tick的动画
+   * @type {Boolean}
+   */
+  animate : true,
+  /**
    * 格式化坐标轴上的节点
    * @type {Function}
    */
@@ -111,6 +116,10 @@ Util.augment(Abstract,{
           plotRange;
       if(!grid){
           return;
+      }
+
+      if(grid.animate == null){
+        grid.animate = _self.get('animate');
       }
       gridGroup = _self.get('parent').addGroup(Grid,grid);
       _self.set('gridGroup',gridGroup);

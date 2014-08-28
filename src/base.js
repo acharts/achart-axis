@@ -551,7 +551,12 @@ Util.augment(Axis,{
             var subPath = Util.substitute('M{x1} {y1}L{x2} {y2}',item);
             path += subPath;
         });
-        Util.animPath(tickShape,path,2);
+        if(_self.get('animate')){
+            Util.animPath(tickShape,path,2);
+        }else{
+            tickShape.attr('path',path);
+        }
+        
     },
 
     //获取方向的系数，坐标轴方向跟浏览器的方向是否一致
