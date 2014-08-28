@@ -288,6 +288,7 @@ Auto.caculate = function(info,stackType){
   return {
     min : min,
     max : tryFixed(max,interval),
+
     interval : interval,
     count : count,
     ticks : ticks,
@@ -494,8 +495,8 @@ Auto.Time.caculate = function(info){
   }
 
   return {
-    max : max,
-    min : min,
+    max : rst.max || max,
+    min : rst.min || min,
     interval : interval,
     ticks : ticks,
     count : ticks.length
