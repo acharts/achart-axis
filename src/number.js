@@ -8,6 +8,7 @@ var
   Axis = require('./base'),
   Util = require('achart-util'),
   abbrs = ['k','m','g','t'],
+  APPEND = 5,
   NAN = NaN;
 
 //取小于当前值的
@@ -17,7 +18,7 @@ var floor = Util.snapFloor,
 function between(v1,v2,value){
   var min = Math.min(v1,v2),
     max = Math.max(v1,v2);
-  return value >= min && value <= max;
+  return (value - min > 1) && ( max - value > 1);
 }
 
 /**
@@ -54,6 +55,12 @@ NumberAxis.ATTRS = {
    * @type {Boolean}
    */
   autoOffset : false,
+
+  /**
+   * 自动设置offset时附加的offset,防止浮点计算精确度问题
+   * @type {Number}
+   */
+  autoAppend : 5,
   /**
    * 类型
    * @type {String}
@@ -165,11 +172,16 @@ Util.augment(NumberAxis,{
       percentEnd = 0,
       offset = [],
       avg,
+      append = _self.get('autoAppend'),
       length = _self.getEndOffset() - _self.getStartOffset();
     if(info.min != null && info.min > ticks[0]){
       
       percentStart = (ticks[1] - info.min)/(ticks[1] - ticks[0]);
-      ticks.shift();
+      if(percentStart < 0.8){
+        ticks.shift();
+      }else{
+        percentStart = 0;
+      }
     }
     var count = ticks.length;
     if(info.max != null && info.max < ticks[count - 1]){
@@ -178,8 +190,8 @@ Util.augment(NumberAxis,{
     }
 
     avg = length /(ticks.length - 1 + percentStart + percentEnd);
-    offset[0] = avg * percentStart;
-    offset[1] = avg * percentEnd;
+    offset[0] = avg * percentStart + append;
+    offset[1] = avg * percentEnd + append;
     _self.set('tickOffset',offset);
   },
   /**

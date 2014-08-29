@@ -169,6 +169,7 @@ describe('auto offset',function(){
     ticks : [0,10,20,30,40,50,60,70,80,90,100],
     max : 95,
     dy : -100,
+    autoAppend : 0,
     autoOffset : true,
     tickInterval : 10,
     labels : {
