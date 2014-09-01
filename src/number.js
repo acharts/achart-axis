@@ -15,10 +15,10 @@ var
 var floor = Util.snapFloor,
   ceiling = Util.snapCeiling;
 
-function between(v1,v2,value){
+function between(v1,v2,value){ //在2个数值之间，容忍2个像素的误差
   var min = Math.min(v1,v2),
     max = Math.max(v1,v2);
-  return (value - min > 1) && ( max - value > 1);
+  return (value >= min || min - value < 2) && (value <= max || value - max < 2);
 }
 
 /**

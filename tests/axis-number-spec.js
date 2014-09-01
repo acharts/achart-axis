@@ -105,7 +105,7 @@ describe('数字坐标轴生成',function(){
   });
 });
 
-/*
+
 describe('测试数字中轴坐标系',function(){
   
   var xAxis = canvas.addGroup(Axis,{
@@ -249,5 +249,5 @@ describe('测试数字中轴坐标系',function(){
 
 });
 
-
+/*
 */

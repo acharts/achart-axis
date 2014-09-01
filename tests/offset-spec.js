@@ -61,6 +61,8 @@ describe('offset axis',function(){
 
   });
 
+
+
   it('测试起始offset外 ,value',function(){
     var value = -4,
       offset = axis.getOffset(value);
@@ -189,6 +191,20 @@ describe('auto offset',function(){
   it('测试起点offset',function(){
     var tickOffset = axis.get('tickOffset');
     expect(tickOffset.length).to.be(2);
+  });
+
+  it('近似值',function(){
+    var value = 5,
+      offset = axis.getOffset(value);
+
+    expect(isNaN(offset)).not.to.be(true);
+
+    offset = axis.getOffset(4.9);
+
+    expect(isNaN(offset)).not.to.be(true);
+
+    offset = axis.getOffset(4);
+    expect(isNaN(offset)).to.be(true);
   });
 
   it('测试终点offset',function(){
