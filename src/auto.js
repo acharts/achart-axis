@@ -327,7 +327,7 @@ function getYear(date){
 }
 
 function createYear(year){
-  return Date.UTC(year,0,01);
+  return new Date(year,0,01).getTime();
 }
 
 function getMonth(date){
@@ -344,7 +344,7 @@ function diffMonth(min,max){
 }
 
 function creatMonth(year,month){
-  return Date.UTC(year,month,01);
+  return new Date(year,month,01).getTime();
 }
 
 function diffDay(min,max){
@@ -441,7 +441,7 @@ Auto.Time.caculate = function(info){
           ddays = diffDay(min,max);
         interval = day * dms;
         for(var i = 0 ; i <= ddays + day; i = i + day){
-          ticks.push(Date.UTC(year,month,mday + i));
+          ticks.push(new Date(year,month,mday + i).getTime());
         }
 
       }else if(interval > HOUR_MS){ //大于一个小时
@@ -455,7 +455,7 @@ Auto.Time.caculate = function(info){
         interval = hours * HOUR_MS;
 
         for(var i = 0 ; i <= dHours + hours; i = i + hours){
-          ticks.push(Date.UTC(year,month,day,hour + i));
+          ticks.push(new Date(year,month,day,hour + i).getTime());
         }
 
       }else if(interval > MINUTE_MS) { //最小单位是分钟

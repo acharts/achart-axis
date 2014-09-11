@@ -175,7 +175,9 @@ Util.augment(NumberAxis,{
       append = _self.get('autoAppend'),
       length = _self.getEndOffset() - _self.getStartOffset();
     if(info.min != null && info.min > ticks[0]){
-      
+      while(info.min > ticks[1]){ //保证只有tick一个大于min
+        ticks.shift();
+      }
       percentStart = (ticks[1] - info.min)/(ticks[1] - ticks[0]);
       if(percentStart < 0.8){
         ticks.shift();
@@ -185,6 +187,9 @@ Util.augment(NumberAxis,{
     }
     var count = ticks.length;
     if(info.max != null && info.max < ticks[count - 1]){
+      while(info.max < ticks[count -2]){
+        ticks.pop();
+      }
       percentEnd = (info.max - ticks[count - 2]) /(ticks[count - 1] - ticks[count-2]);
       ticks.pop();
     }
