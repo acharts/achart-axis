@@ -93,14 +93,7 @@ Util.augment(Category,{
             categories = _self.get('categories');
         return categories[index];
     },
-    /**
-     * 改变坐标轴，对于分类坐标轴，只能更改 categories
-     * <code>
-     *     axis.changeAxis({
-     *         categories : categories
-     *     });
-     * </code>
-     */
+    //
     changeAxis : function(info){
 
     },

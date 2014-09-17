@@ -1,8 +1,8 @@
 {
   "name": "achart-axis",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "axis for acharts",
+  "keywords": ["achart","ahcart-axis","acharts"],
   "homepage": "https://github.com/acharts/achart-axis",
   "author": "dxq613@gmail.com",
   "repository": {
@@ -27,6 +27,6 @@
       "sinon" : "1.6.0",
       "jquery" : "1.9.1"
     },
-    "tests": "tests/*-spec.js"
+    "tests": "tests/axis-number-spec.js"
   }
 }

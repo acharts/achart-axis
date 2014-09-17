@@ -15,7 +15,7 @@ var canvas = new Canvas({
   width : 500,
   height : 500
 });
-
+/*
 describe('数字坐标轴生成',function(){
 
   var axis = canvas.addGroup(Axis,{
@@ -105,7 +105,7 @@ describe('数字坐标轴生成',function(){
   });
 });
 
-
+*/
 describe('测试数字中轴坐标系',function(){
   
   var xAxis = canvas.addGroup(Axis,{
@@ -198,6 +198,9 @@ describe('测试数字中轴坐标系',function(){
   });
   
   it('获取任意点的坐标',function(){
+    var offset = yAxis.getOffset(0);
+
+    expect(yAxis.getValue(offset)).to.be(0);
 
   });
   var path1,path2;

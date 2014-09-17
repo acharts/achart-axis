@@ -9,6 +9,7 @@ var
   DateUtil = require('achart-date'),
   snapArray = [0,1,1.5,2,2.5,3,4,5,6,8,10],
   intervalArray = [0,1,2.5,5,10],
+  snapTimeArray = [1,2,4,6,8,12],
   MIN_COUNT = 5, //最小6个坐标点
   MAX_COUNT = 7; //最多8个坐标点
 
@@ -248,12 +249,7 @@ Auto.caculate = function(info,stackType){
       if(rst.deviation > temp){
         interval = snapTo(temp,true,intervalArray);
       }else{
-        if(rst.deviation){
-          interval = snapTo(rst.deviation,true,intervalArray);
-        }else{
-          interval = snapTo(temp,true,intervalArray);
-        }
-        
+        interval = snapTo(temp,true,intervalArray);
       }
       
       count = parseInt((max - min) / interval,10);
@@ -316,7 +312,7 @@ function floorDate(date){
 function ceilDate(date){
   date = new Date(date);
   var temp = DateUtil.getDate(date);
-  if(!DateUtil.isDateEquals(date,temp)){ //如果不是整天，则取整，添加一天
+  if(temp < date){ //如果不是整天，则取整，添加一天
     temp = DateUtil.addDay(1,temp);
   }
   return temp.getTime();;
@@ -432,7 +428,7 @@ Auto.Time.caculate = function(info){
         }
         interval = null;
 
-      }else if(interval > dms){ //大于一天
+      }else if(interval > dms * 0.5){ //大于一天
         var date = new Date(min),
           year = date.getFullYear(),
           month = date.getMonth(min),
@@ -440,7 +436,7 @@ Auto.Time.caculate = function(info){
           day = Math.ceil(interval / dms),
           ddays = diffDay(min,max);
         interval = day * dms;
-        for(var i = 0 ; i <= ddays + day; i = i + day){
+        for(var i = 0 ; i < ddays + day; i = i + day){
           ticks.push(new Date(year,month,mday + i).getTime());
         }
 
@@ -450,7 +446,7 @@ Auto.Time.caculate = function(info){
           month = date.getMonth(min),
           day = date.getDate(),
           hour = date.getHours(),
-          hours = Math.ceil(interval / HOUR_MS),
+          hours = Util.snapTo(snapTimeArray,Math.ceil(interval / HOUR_MS)),
           dHours = diffHour(min,max);
         interval = hours * HOUR_MS;
 

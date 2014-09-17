@@ -23,6 +23,7 @@ Radius.ATTRS = {
    * @type {Chart.Axis.Circle}
    */
   circle : null,
+  
   position : 'left',
   /**
    * 类型
@@ -40,9 +41,10 @@ Util.augment(Radius,{
     Radius.superclass.beforeRenderUI.call(this);
     var _self = this,
       circle = _self.get('circle');
-
-    _self.set('start',circle.getCenter());
-    _self.set('end',circle.getCirclePoint(0));
+    if(circle){
+      _self.set('start',circle.getCenter());
+      _self.set('end',circle.getCirclePoint(0));
+    }
   },
   /**
    * 获取栅格项的配置信息，一般是起始点信息
@@ -81,6 +83,13 @@ Util.augment(Radius,{
       offset = _self.getOffset(value);
 
     return circle.getCirclePoint(angle,Math.abs(offset - center.y))
+  },
+  getValueByPoint : function(x,y){
+    var _self = this,
+      circle = _self.get('circle'),
+      center = circle.getCenter(),
+      distance = circle.getDistance(x,y);
+    return _self.getValue(center.y - distance);
   }
 });
 

@@ -89,6 +89,17 @@ Axis.ATTRS = {
         value : 5
     }
    
+    /**
+     * @event beforechange
+     * 坐标轴变化前
+     * @param {Object} ev 事件对象
+     * @param {Object} ev.info 变化的信息
+     */
+    
+    /**
+     * @event afterchange
+     * 坐标轴变化后
+     */
 
 };
 
@@ -161,6 +172,7 @@ Util.augment(Axis,{
     change : function(info){
         var _self = this;
         if(_self.isChange(info.ticks)){
+            _self.fire('beforechange',{info : info});
             _self._resetRange();
             _self._clearTicksInfo();
             _self.changeInfo(info);
@@ -169,6 +181,8 @@ Util.augment(Axis,{
             _self._changeTicks();
             _self._changeGrid();
             _self.resetLabels();
+
+            _self.fire('afterchange');
         }
     },
     _resetRange : function(){

@@ -190,6 +190,7 @@ Util.augment(NumberAxis,{
       while(info.max < ticks[count -2]){
         ticks.pop();
       }
+      count = ticks.length;
       percentEnd = (info.max - ticks[count - 2]) /(ticks[count - 1] - ticks[count-2]);
       ticks.pop();
     }
@@ -226,6 +227,7 @@ Util.augment(NumberAxis,{
       var _self = this,
           startCoord = _self._getStartCoord(),
           endCoord = _self._getEndCoord(),
+          vertical = _self.isVertical(),
           pointCache,
           floorVal,
           floorIndex,
@@ -235,18 +237,25 @@ Util.augment(NumberAxis,{
           tickInterval,
           ticks;
 
-      if(offset < startCoord || offset > endCoord){
+      pointCache = _self.get('pointCache');
+
+      var max = Math.max(startCoord,endCoord),
+        min = Math.min(startCoord,endCoord);
+
+      if(offset < min || offset > max){
           return NaN;
       }
-      pointCache = _self.get('pointCache');
-      floorVal = floor(pointCache,offset); 
+      var  tmpCache = pointCache.slice(0).sort(function(v1,v2){return v1 - v2});
+
+      floorVal = vertical ? ceiling(tmpCache,offset) : floor(tmpCache,offset); 
 
       if(isNaN(floorVal)){ //存在tickoffset,比第一个tick小的场景
-        floorVal = pointCache[0];
-        ceilingVal = pointCache[1];
+        floorVal = tmpCache[0];
+        ceilingVal = tmpCache[1];
       }
       baseVal = floorVal;
       floorIndex = Util.indexOf(pointCache,floorVal);
+
       baseIndex = floorIndex;
       ticks = _self.get('ticks');
       tickInterval = _self.get('tickInterval');
@@ -260,12 +269,12 @@ Util.augment(NumberAxis,{
         return ticks[floorIndex] + ((offset - baseVal) / avg) * tickInterval;
       }
       if(ceilingVal == null){
-        ceilingVal = ceiling(pointCache,offset);
+        ceilingVal = ceiling(tmpCache,offset);
         if(isNaN(ceilingVal)){
-          var count = pointCache.length;
+          var count = tmpCache.length;
           floorIndex = count - 2;
           baseIndex = count - 1;
-          baseVal = pointCache[count - 1];
+          baseVal = tmpCache[count - 1];
         }
       }
       

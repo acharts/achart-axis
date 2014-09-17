@@ -68,7 +68,6 @@ describe('测试时间坐标轴',function(){
     expect(rst.ticks.length).to.be(10);
     log(data,rst,'指定数据，,测试月小于结束月，不指定interval');
   });
-  /**/
  
  it('指定数据,测试天，不指定interval',function(){
     var data = [new Date('2010/12/20'),new Date('2011/05/20')];
@@ -94,9 +93,25 @@ describe('测试时间坐标轴',function(){
     log(data,rst,'指定数据,测试天，不指定interval');
   });
 
-  it('移除',function(){
+  it('不正好是日期',function(){
+    var data = [1410220800000,1410739200000];
+    var rst = Auto.Time.caculate({data : data});
+    expect(rst.max >= data[1]).to.be(true);
+    expect(rst.ticks[rst.ticks.length - 1] > data[1]).to.be(true);
+    log(data,rst,'不正好是日期');
+  });
+
+  it('计算小时',function(){
+    var data = [1254787200000,1254960000000];
+    var rst = Auto.Time.caculate({data : data});
+    expect(rst.max >= data[1]).to.be(true);
+    expect(rst.ticks[rst.ticks.length - 1] > data[1]).to.be(true);
+    log(data,rst,'计算小时');
+  });
+
+  xit('移除',function(){
     $('#s2').remove();
-  })
+  });
 
 });
 

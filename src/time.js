@@ -38,8 +38,6 @@ Time.ATTRS = {
    */
   startDate : null,
 
-  dateFormat : null,
-
   autoOffset : true,
   /**
    * 结束日期时间
