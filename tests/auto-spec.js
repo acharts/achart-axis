@@ -32,9 +32,9 @@ describe('计算简单集合',function(){
     log(data,rst);
     var info = rst.info;
     
-    expect(rst.min).to.be(0);
+    expect(rst.min).to.be(-1);
     expect(rst.max).to.be(1);
-    expect(rst.ticks.length).to.be(2);
+    expect(rst.ticks.length).to.be(3);
   });
 
   it('计算多个集合',function(){

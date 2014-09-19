@@ -245,6 +245,7 @@ Auto.caculate = function(info,stackType){
 
     if(max == min){
       max = min + 1;
+      min = min -1;
       interval = 1;
     }
 
