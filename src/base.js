@@ -100,6 +100,16 @@ Axis.ATTRS = {
      * @event afterchange
      * 坐标轴变化后
      */
+    
+    /**
+    * @event beforepaint
+    * 坐标轴开始渲染,仅第一次渲染时
+    */
+
+    /**
+    * @event afterpaint
+    * 坐标轴渲染完成,仅第一次渲染时
+    */
 
 };
 
@@ -122,7 +132,6 @@ Util.augment(Axis,{
             _self.set('orthoEnd',_self._getOrthoEnd());
         }
         
-
         _self.set('indexCache',{});
         _self.set('pointCache',[]);
 
@@ -251,9 +260,11 @@ Util.augment(Axis,{
      */
     paint : function(){
         var _self = this;
+        _self.fire('beforepaint');
         _self._drawLines();
         _self._renderTicks();
         _self._renderGrid(); 
+        _self.fire('afterpaint');
     },
 
     _changeLine : function(){

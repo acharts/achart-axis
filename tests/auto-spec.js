@@ -26,6 +26,17 @@ describe('计算简单集合',function(){
     expect(info.max <= rst.max).to.be(true);
   });
 
+  it('全部是0',function(){
+    var data = [0,0,0],
+      rst = Auto.caculate({data : data});
+    log(data,rst);
+    var info = rst.info;
+    
+    expect(rst.min).to.be(0);
+    expect(rst.max).to.be(1);
+    expect(rst.ticks.length).to.be(2);
+  });
+
   it('计算多个集合',function(){
     var data = [
         [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
@@ -244,7 +255,7 @@ describe('计算距离0比较远的数字',function(){
         expect(info.max <= rst.max).to.be(true);
     });
 
-    it('移除 容器',function(){
+    xit('移除 容器',function(){
         $('#s1').remove();
     });
 });

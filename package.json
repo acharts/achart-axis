@@ -27,6 +27,6 @@
       "sinon" : "1.6.0",
       "jquery" : "1.9.1"
     },
-    "tests": "tests/axis-number-spec.js"
+    "tests": "tests/*-spec.js"
   }
 }

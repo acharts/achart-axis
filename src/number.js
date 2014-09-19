@@ -189,8 +189,8 @@ Util.augment(NumberAxis,{
     if(info.max != null && info.max < ticks[count - 1]){
       while(info.max < ticks[count -2]){
         ticks.pop();
+        count = ticks.length;
       }
-      count = ticks.length;
       percentEnd = (info.max - ticks[count - 2]) /(ticks[count - 1] - ticks[count-2]);
       ticks.pop();
     }

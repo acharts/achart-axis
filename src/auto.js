@@ -243,6 +243,11 @@ Auto.caculate = function(info,stackType){
       min = rst.min;
     }
 
+    if(max == min){
+      max = min + 1;
+      interval = 1;
+    }
+
     //计算间距
     if(isNull(interval)){
       var temp = (max - min) / avgCount ;// ( minCount -1); //防止方差过大
