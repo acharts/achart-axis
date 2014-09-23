@@ -31,7 +31,7 @@ var Time = function(cfg){
 };
 
 Time.ATTRS = {
-
+  type : 'time',
   /**
    * 开始日期时间
    * @type {Date}

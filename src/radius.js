@@ -84,6 +84,12 @@ Util.augment(Radius,{
 
     return circle.getCirclePoint(angle,Math.abs(offset - center.y))
   },
+  _resetRange : function(){
+
+  },
+  isRangeChange : function(){
+    return false;
+  },
   getValueByPoint : function(x,y){
     var _self = this,
       circle = _self.get('circle'),

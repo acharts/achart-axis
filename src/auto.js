@@ -358,7 +358,7 @@ function diffHour(min,max){
 }
 
 function diffMinus(min,max){
-  return Math.ceil((max - min) / 60 * 1000);
+  return Math.ceil((max - min) / (60 * 1000));
 }
 
 //时间坐标轴自动计算
