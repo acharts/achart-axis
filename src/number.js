@@ -126,9 +126,10 @@ Util.augment(NumberAxis,{
       count = (max - min)/tickInterval,
       cur;
 
-      if(! (max > min) || isNaN(max) || max == null){
+      if(! (max > min) || isNaN(max) || max == null || isNaN(min) || min == null || isNaN(tickInterval) || tickInterval == null){
         return [];
       }
+      
       ticks.push(min);
       for(var i = 1 ; i <= count ;i++){
         cur = tickInterval * i + min;
