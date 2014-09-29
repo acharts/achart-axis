@@ -153,8 +153,8 @@ function analyze(arr){
   };
 }
 
-//分析数据
-function analyzeData(data,parser,stacked){
+//将多维数组变成一维
+function getSimpleArray(data,stacked){
   var arr = [];
   if(Util.isArray(data[0])){
     if(stacked){
@@ -174,9 +174,13 @@ function analyzeData(data,parser,stacked){
   }else{
     arr = data;
   }
+  return arr;
+}
 
-
+//分析数据
+function analyzeData(data,parser,stacked){
   
+  var arr = getSimpleArray(data,stacked);
   if(parser){
     arr = Util.map(arr,parser);
   }
@@ -504,5 +508,25 @@ Auto.Time.caculate = function(info){
     count : ticks.length
   }
 }
+Auto.TimeCategory = {};
+Auto.TimeCategory.caculate = function(info){
+  var rst = {},
+    ticks = [],
+    tickCount = info.maxCount || MAX_COUNT;
 
+  var categories = getSimpleArray(info.data);
+  if(categories.length < tickCount){
+    ticks = [].concat(categories);
+  }else{
+    var length = categories.length ,
+      step = parseInt(length/ tickCount,10);
+    for(var i = 0; i < length - 1; i = i + step){
+      ticks.push(categories[i]);
+    }
+    ticks.push(categories[length - 1]);
+  }
+  rst.categories = categories;
+  rst.ticks = ticks;
+  return rst; 
+}
 module.exports = Auto;
