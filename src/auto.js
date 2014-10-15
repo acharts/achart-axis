@@ -517,14 +517,14 @@ Auto.TimeCategory.caculate = function(info){
     ticks = [].concat(categories);
   }else{
     var length = categories.length ,
-      step = parseInt(length/ tickCount,10),
-      last = categories[length - 1];
+      step = parseInt(length/ tickCount,10);
     for(var i = 0; i < length - 1; i = i + step){
       ticks.push(categories[i]);
     }
+    var last = categories[length - 1];
     //如果最后2个坐标点的间距过小，则取消倒数第二个坐标点
-    if((categories[1] - categories[0]) > 2 * (last - categories[categories.length - 1])){
-      categories.pop();
+    if((categories[1] - categories[0]) > 2 * (last - categories[categories.length - 2])){
+      ticks.pop();
     }
     ticks.push(last);
 
