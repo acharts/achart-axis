@@ -1,3 +1,6 @@
+var Util = require('achart-util'),
+  CAxis = require('./category');
+
 /**
  * @class Chart.Axis.TimeCategory
  * 时间坐标轴
@@ -15,6 +18,6 @@ TimeCategory.ATTRS = {
   tickAlignCenter : false
 };
 
-Util.extend(TimeCategory,NAixs);
+Util.extend(TimeCategory,CAxis);
 
 module.exports = TimeCategory;

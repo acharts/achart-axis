@@ -222,9 +222,9 @@ Auto.caculate = function(info,stackType){
     stacked = false;
 
   if(stackType) {
-    if(stackType != 'none'){
+    /*if(stackType != 'none'){
       stacked = true;
-    }
+    }*/
     if(stackType == 'percent'){
       min = 0;
       max = 100;
@@ -373,9 +373,7 @@ Auto.Time.caculate = function(info){
     interval = info.interval,
     ticks = [],
     count,
-    rst;
-    
-
+    rst = {};
 
   if(isNull(min) || isNull(max) || isNull(interval)){
     rst = analyzeData(data,function(date){
@@ -519,12 +517,19 @@ Auto.TimeCategory.caculate = function(info){
     ticks = [].concat(categories);
   }else{
     var length = categories.length ,
-      step = parseInt(length/ tickCount,10);
+      step = parseInt(length/ tickCount,10),
+      last = categories[length - 1];
     for(var i = 0; i < length - 1; i = i + step){
       ticks.push(categories[i]);
     }
-    ticks.push(categories[length - 1]);
+    //如果最后2个坐标点的间距过小，则取消倒数第二个坐标点
+    if((categories[1] - categories[0]) > 2 * (last - categories[categories.length - 1])){
+      categories.pop();
+    }
+    ticks.push(last);
+
   }
+
   rst.categories = categories;
   rst.ticks = ticks;
   return rst; 
