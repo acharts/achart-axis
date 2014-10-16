@@ -22,6 +22,10 @@ function isBetween(x,x1,x2){
 /**
  * @class Chart.Axis
  * 坐标轴
+ * 
+ *  - <a href="http://spmjs.io/docs/achart-axis/" target="_blank">文档</a>
+ *  - <a href="http://spmjs.io/docs/achart-axis/wiki/" target="_blank">wiki</a>
+ *  
  * @extends Chart.Axis.Abstract
  */
 function Axis(cfg){

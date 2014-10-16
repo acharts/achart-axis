@@ -12,6 +12,10 @@ var Util = require('achart-util'),
 /**
  * @class Chart.Axis.Category
  * 分组坐标轴
+ *
+ *  - <a href="http://spmjs.io/docs/achart-axis/#axis-category" target="_blank">文档</a>
+ *  - <a href="http://spmjs.io/docs/achart-axis/wiki/3-category.html" target="_blank">wiki</a>
+ * 
  * @extends Chart.Axis
  */
 function Category(cfg){

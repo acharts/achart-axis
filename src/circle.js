@@ -23,6 +23,10 @@ function getPoint(self,r,angle){
 /**
  * @class Chart.Axis.Circle
  * 圆形的坐标
+ *
+ *  - <a href="http://spmjs.io/docs/achart-axis/#axis-circle" target="_blank">文档</a>
+ *  - <a href="http://spmjs.io/docs/achart-axis/wiki/5-circle.html" target="_blank">wiki</a>
+ *  
  * @extends Chart.Axis.Abstract
  */
 var Circle = function(cfg){

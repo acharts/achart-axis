@@ -13,7 +13,11 @@ var Item = require('achart-plot').Item,
 /**
  * @class Chart.Axis.Abstract
  * 抽象的坐标轴类
- * @extends Chart.PlotItem
+ * 
+ * - <a href="http://spmjs.io/docs/achart-axis/" target="_blank">文档</a>
+ * - <a href="http://spmjs.io/docs/achart-axis/wiki/" target="_blank">wiki</a>
+ * 
+ * @extends Chart.Plot.Item
  * @mixin Chart.ShowLabels
  */
 var Abstract = function(cfg){

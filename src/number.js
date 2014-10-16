@@ -24,6 +24,10 @@ function between(v1,v2,value){ //在2个数值之间，容忍2个像素的误差
 /**
  * @class Chart.Axis.Number
  * 数字坐标轴
+ *
+ *  - <a href="http://spmjs.io/docs/achart-axis/#axis-number" target="_blank">文档</a>
+ *  - <a href="http://spmjs.io/docs/achart-axis/wiki/2-number.html" target="_blank">wiki</a>
+ *  
  * @extends Chart.Axis
  */
 function NumberAxis(cfg){

@@ -9,6 +9,8 @@ Axis.Time = require('./src/time');
 
 Axis.TimeCategory = require('./src/timecategory');
 
+Axis.NumberCategory = require('./src/numbercategory');
+
 Axis.Auto = require('./src/auto');
 
 Axis.Circle = require('./src/circle');

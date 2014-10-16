@@ -4,6 +4,8 @@ var Util = require('achart-util'),
 /**
  * @class Chart.Axis.TimeCategory
  * 时间坐标轴
+ * 
+ * @extends Chart.Axis.Category
  */
 var TimeCategory = function(cfg){
   TimeCategory.superclass.constructor.call(this,cfg)

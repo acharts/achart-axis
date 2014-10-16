@@ -25,6 +25,9 @@ function parseTime(d){
 /**
  * @class Chart.Axis.Time
  * 时间坐标轴
+ * 
+ *  - <a href="http://spmjs.io/docs/achart-axis/#axis-time" target="_blank">文档</a>
+ *  - <a href="http://spmjs.io/docs/achart-axis/wiki/4-time.html" target="_blank">wiki</a>
  */
 var Time = function(cfg){
   Time.superclass.constructor.call(this,cfg)

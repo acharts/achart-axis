@@ -32,9 +32,12 @@ function lines2path(lines,attrs){
 
 
 /**
- * @class Chart.Grid
+ * @class Chart.Axis.Grid
  * 背景栅格
- * @extends Chart.PlotItem
+ *
+ *  - <a href="http://spmjs.io/docs/achart-axis/api/grid.html" target="_blank">文档</a>
+ *    
+ * @extends Chart.Plot.Item
  */
 function Grid(cfg){
 	Grid.superclass.constructor.call(this,cfg);
