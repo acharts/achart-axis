@@ -110,34 +110,12 @@ function tryFixed(v,base){
 //分析数组
 function analyze(arr){
 
-  var max = arr[0],
-    min = arr[0],
-    avg,
-    total = arr[0],
-    length = arr.length,
-    deviation = 0,//偏差
-    avg; 
+  var max = Math.max.apply(null,arr),
+    min = Math.min.apply(null,arr);
 
-  for (var i = 1; i < length; i ++) {
-    var val = arr[i];
-    if(max < val){
-      max = val;
-    }
-    if(min > val){
-      min = val;
-    }
-    total += val;
-
-  };
-
-  avg = total / length;
-
-  for (var i = 0; i < length; i ++) {
-    deviation += Math.abs(arr[i] - avg);
-  };
-
-  deviation = deviation / length;
-
+  if(!arr.length){
+    min = max = 0;
+  }
   if(min == max){
     if(min > 0){
       min = 0;
@@ -147,9 +125,7 @@ function analyze(arr){
   }
   return {
     max : max,
-    min : min,
-    avg : avg,
-    deviation : deviation
+    min : min
   };
 }
 
@@ -255,12 +231,9 @@ Auto.caculate = function(info,stackType){
 
     //计算间距
     if(isNull(interval)){
-      var temp = (max - min) / avgCount ;// ( minCount -1); //防止方差过大
-      if(rst.deviation > temp){
-        interval = snapTo(temp,true,intervalArray);
-      }else{
-        interval = snapTo(temp,true,intervalArray);
-      }
+      var temp = (max - min) / avgCount ;
+
+      interval = snapTo(temp,true,intervalArray);
       
       count = parseInt((max - min) / interval,10);
       if(count > maxCount){
