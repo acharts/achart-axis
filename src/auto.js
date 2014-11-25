@@ -109,13 +109,21 @@ function tryFixed(v,base){
 
 //分析数组
 function analyze(arr){
+  
+  var max = arr[0],
+    min = arr[0],
+    length = arr.length; 
 
-  var max = Math.max.apply(null,arr),
-    min = Math.min.apply(null,arr);
+  for (var i = 1; i < length; i ++) {
+    var val = arr[i];
+    if(max < val){
+      max = val;
+    }
+    if(min > val){
+      min = val;
+    }
+  };
 
-  if(!arr.length){
-    min = max = 0;
-  }
   if(min == max){
     if(min > 0){
       min = 0;
@@ -123,6 +131,7 @@ function analyze(arr){
       max = 0;
     }
   }
+  
   return {
     max : max,
     min : min

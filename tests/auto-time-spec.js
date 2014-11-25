@@ -33,7 +33,6 @@ var Auto = require('../src/auto'),
 
 describe('测试时间坐标轴',function(){
 
- /**/
   it('指定最大值，最小值,不指定interval',function(){
     var info = {
       min : new Date(2010,1,1).getTime(),
