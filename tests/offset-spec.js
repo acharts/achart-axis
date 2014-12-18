@@ -15,7 +15,6 @@ var canvas = new Canvas({
   width : 500,
   height : 500
 });
-/**/
 
 describe('offset axis',function(){
 

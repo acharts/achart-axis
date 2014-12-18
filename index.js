@@ -11,7 +11,7 @@ Axis.TimeCategory = require('./src/timecategory');
 
 Axis.NumberCategory = require('./src/numbercategory');
 
-Axis.Auto = require('./src/auto');
+Axis.Auto = require('achart-auto');
 
 Axis.Circle = require('./src/circle');
 
