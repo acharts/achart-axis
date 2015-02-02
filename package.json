@@ -1,6 +1,6 @@
 {
   "name": "achart-axis",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "axis for acharts",
   "keywords": ["achart","ahcart-axis","acharts"],
   "homepage": "https://github.com/acharts/achart-axis",
@@ -17,9 +17,9 @@
     "main": "index.js",
     "dependencies": {
       "achart-util" : "~1.1.0",
-      "achart-plot" : "~1.1.0",
+      "achart-plot" : "~1.1.1",
       "achart-auto" : "~1.0.0",
-      "achart-labels" : "~1.0.1",
+      "achart-labels" : "~1.0.2",
       "achart-date" : "~1.0.0"
     },
     "devDependencies": {
