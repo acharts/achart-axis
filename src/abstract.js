@@ -220,7 +220,10 @@ Util.augment(Abstract,{
         labels = _self.get('labels');
 
     ticks = ticks || _self.get('ticks');
-    Util.each(ticks,function(tick,index){
+      //添加翻转功能
+    var t = _self.get('reverse') ? ticks.concat().reverse() : ticks;
+
+    Util.each(t, function (tick, index) {
       var tickOffsetPoint = _self.getTickOffsetPoint(index),
             offsetPoint = _self.getOffsetPoint(index),
             offset = _self.getOffsetByIndex(index);
